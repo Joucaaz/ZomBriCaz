@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.Video;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,17 +39,15 @@ public class GameManager : MonoBehaviour
     private bool findInBDD = false;
     void Awake()
     {
-        if (instance == null)
-        {
+        if(instance == null){
             // PlayerPrefs.DeleteKey("PlayerID");
-            playerConnected();
+            
             instance = this;
+            playerConnected();
             DontDestroyOnLoad(gameObject);
-
         }
-        else
-        {
-            // gameObject.SetActive(false);
+        else{
+            Destroy(gameObject);
         }
         
        
@@ -60,6 +59,7 @@ public class GameManager : MonoBehaviour
         if(backgroundMusic != null && !SoundManager.Instance.musicSource.isPlaying){
                 SoundManager.Instance.PlayMusic(backgroundMusic);
         }
+        
         // if(backgroundMusic != null){
         //     SoundManager.Instance.PlayMusic(backgroundMusic);
         // }
@@ -83,12 +83,19 @@ public class GameManager : MonoBehaviour
             isRankings = false;
             isSettings = false;
             SoundManager.Instance.StopMusic();
+            GameObject.Find("CanvasVideo").GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
+            GameObject.Find("CanvasVideo").GetComponent<CanvasGroup>().alpha = 1;
             if(backgroundMusic != null && !SoundManager.Instance.musicSource.isPlaying){
                 SoundManager.Instance.PlayMusic(backgroundMusic);
             }
+            
+            // if (videoBackground != null)
+            // {
+            //     videoBackground.Play(); // Reprend la lecture de la vidéo lors du chargement d'une nouvelle scène
+            // }
             // if (backgroundMusic != null && !musicSource.isPlaying)
             // {
             //     musicSource.clip = backgroundMusic;
