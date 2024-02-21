@@ -233,9 +233,9 @@ public class PlayerMovement2 : MonoBehaviour
             // }
             if (isMoving)
             {
-                if (isRunning && isMovingForward && !reloadingEnCours)
+                if (isRunning)
                 {
-                    if(isAiming){
+                    if(isAiming || reloadingEnCours){
                         characterAnimator.SetBool("isRunning", false);
                         characterAnimator.SetBool("isWalking", true);
                         Vector3 moveAimRun = transform.right * x + transform.forward * y;
@@ -306,7 +306,9 @@ public class PlayerMovement2 : MonoBehaviour
         characterAnimator.Play("Inspect");
 
     }
-
+    private void StopReload(){
+        characterAnimator.enabled = false;
+    }
     private void Reload() 
     {
         if(Time.time - lastReloadTime >= timeBetweenReload){
