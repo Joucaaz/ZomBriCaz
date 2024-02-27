@@ -9,6 +9,7 @@ public class TakeDamage : MonoBehaviour
     public PlayerMovement2 playerMovement;
     // public SlowMotion slowMotion;
     public float damageDegats = 50;
+    public Zombie zombieScript;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,8 @@ public class TakeDamage : MonoBehaviour
         {
             playerMovement.healthPlayer -= damageDegats;
             playerMovement.callBlood();
+            playerMovement.reloadingEnCours = false;
+            SoundManager.Instance.StopReloadSound();
             playerMovement.characterAnimator.Play("takeDamage");
             playerMovement.reloadingEnCours = false;
             if(playerMovement.healthPlayer <= 0 && playerMovement.characterAnimator.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.0f){
@@ -37,6 +40,10 @@ public class TakeDamage : MonoBehaviour
             }
         }
         
+    }
+
+    public void changeZombieAttackBool(){
+        zombieScript.zombieAttack = false;
     }
     
     // Update is called once per frame

@@ -54,7 +54,7 @@ public class Credits : MonoBehaviour
     public void openJoucazLinkedin(){
         GameManager.Instance.OpenWebsite("https://www.linkedin.com/in/joudcazeaux/");
     }
-    public void openBricouLinkedin(){
-        GameManager.Instance.OpenWebsite("mailto:eugeniebri@cy-tech.fr");
+    public void openJoucazMail(){
+        GameManager.Instance.OpenWebsite("mailto:joud.cazeaux@free.fr");
     }
 }

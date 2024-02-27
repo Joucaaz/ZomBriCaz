@@ -26,6 +26,7 @@ public class SkinCreator : MonoBehaviour
     public int prefabWeapon;
     [SerializeField] private AudioClip buySound;
     [SerializeField] private AudioClip wrongBuy;
+    public BuySkins buySkins;
     
     void Start()
     {
@@ -33,14 +34,15 @@ public class SkinCreator : MonoBehaviour
         playerScript = player.gameObject.GetComponent<PlayerMovement2>();
         title.text = titleString;
         imageSkin.sprite = skin;
-        priceText.text = price.ToString() + " $";
+        // priceText.text = price.ToString() + " $";
 
     }
     void Update(){
         if(weapon != null && material != null){
             if (!AreTexturesEqual(getMaterial(weapon), material))
             {
-                buttonText.text = buy;
+                buttonText.text = price.ToString() + " $";
+
                 // buttonBuy.enabled = false;
                 // buttonBuy.interactable = true;
 
@@ -100,6 +102,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().material = material;
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
+                buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -122,6 +125,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().SetMaterials(materialsList);
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
+                buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -143,6 +147,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().SetMaterials(materialsList);
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
+                buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -161,6 +166,7 @@ public class SkinCreator : MonoBehaviour
             playerScript.weaponController.bulletsTotal = playerScript.weaponController.bulletsTotalInitial;
             SoundManager.Instance.PlaySound(buySound);
             chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
+            buySkins.hideSkins();
         }
         else{
             SoundManager.Instance.PlaySound(wrongBuy);

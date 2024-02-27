@@ -235,7 +235,7 @@ public class PlayerMovement2 : MonoBehaviour
             {
                 if (isRunning)
                 {
-                    if(isAiming || reloadingEnCours){
+                    if(isAiming){
                         characterAnimator.SetBool("isRunning", false);
                         characterAnimator.SetBool("isWalking", true);
                         Vector3 moveAimRun = transform.right * x + transform.forward * y;
@@ -276,16 +276,20 @@ public class PlayerMovement2 : MonoBehaviour
             {
                 if(bulletsTotal  > 0 && !reloadingEnCours )
                 {
-                    reloadingEnCours = true;
+                    
                     Reload();
                 }
                 
             }
+            if(reloadingEnCours && isRunning){
+                IdleHand();
+            }
+            Debug.Log(reloadingEnCours + " + " + isRunning);
             if (isReloading && !isRunning && bulletsInside < inventory.GetItem(primarySecondary).GetComponent<WeaponController>().maxBulletsInOneMagazine)
             {
                 if (bulletsTotal > 0)
                 {
-                    // reloadingEnCours = true;
+                    
                     Reload();
                 } 
             }
@@ -295,34 +299,43 @@ public class PlayerMovement2 : MonoBehaviour
             if(isInspecting && !isRunning ){
                 InspectWeapon();
             }
+
         }
         
 
         
     }
+    private void IdleHand(){
+        Debug.Log("OOOOOHHHHH");
+        SoundManager.Instance.StopReloadSound();
+        reloadingEnCours = false;
+        // characterAnimator.Play("stopReload");       
+        characterAnimator.Play("Shoot");
+
+    }
 
     private void InspectWeapon()
     {
+        SoundManager.Instance.StopReloadSound();
+        reloadingEnCours = false;
         characterAnimator.Play("Inspect");
-
-    }
-    private void StopReload(){
-        characterAnimator.enabled = false;
     }
     private void Reload() 
     {
-        if(Time.time - lastReloadTime >= timeBetweenReload){
+        if(!reloadingEnCours){
             characterAnimator.Play("Reload");
-            SoundManager.Instance.PlaySound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip);
+            SoundManager.Instance.PlayReloadSound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip);
+            // SoundManager.Instance.PlaySound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip);
             lastReloadTime = Time.time;
+            reloadingEnCours = true;
         }
         
     }
 
     private void Shoot()
     {
-        
-
+        reloadingEnCours = false;
+        SoundManager.Instance.StopReloadSound();
         if (Time.time - lastShotTime >= timeBetweenShots)
         {
             characterAnimator.Play("Shoot");

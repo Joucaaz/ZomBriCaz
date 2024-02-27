@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    [SerializeField] public AudioSource musicSource, effectsSource;
+    [SerializeField] public AudioSource musicSource, effectsSource, reloadSource;
     // Start is called before the first frame update
     private bool isFading;
     void Awake()
@@ -22,6 +22,9 @@ public class SoundManager : MonoBehaviour
     public void PlaySound(AudioClip clip){
         effectsSource.PlayOneShot(clip);
     }
+    public void StopSound(){
+        effectsSource.Stop();
+    }
     public void PlayMusic(AudioClip clip){
         musicSource.clip = clip;
         musicSource.loop = true;
@@ -29,6 +32,15 @@ public class SoundManager : MonoBehaviour
     }
     public void StopMusic(){
         musicSource.Stop();
+    }
+
+    public void PlayReloadSound(AudioClip clip){
+        reloadSource.clip = clip;
+        reloadSource.loop = false;
+        reloadSource.Play();
+    }
+    public void StopReloadSound(){
+        reloadSource.Stop();
     }
 
     public void PlayAmbiance(AudioClip ambiance, float fadeDuration = 1.0f)

@@ -76,6 +76,7 @@ public class ZombieSpawner : MonoBehaviour
         return randomNumber;
     }
     private void startNextWave(){
+        
         SoundManager.Instance.PlaySound(clipNewWave);
         numberOfWave ++;
         if(numberOfWave != 1){
@@ -84,6 +85,11 @@ public class ZombieSpawner : MonoBehaviour
         }        
         
         StartCoroutine(SpawnWave());
+        if (numberOfWave == 14)
+        {
+            CancelInvoke("startNextWave");
+            InvokeRepeating("startNextWave", 45f, 75f);
+        }
     }
     
     private IEnumerator SpawnWave()
@@ -97,7 +103,7 @@ public class ZombieSpawner : MonoBehaviour
             // zombiesList.Add(zombieScript);
             if(player.transform.position.z > 32){
 
-                // Debug.Log("POS : port");
+                Debug.Log("POS : port");
                 List<int> exclusions = new List<int> { 0, 1, 2 };
                 int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
@@ -110,7 +116,7 @@ public class ZombieSpawner : MonoBehaviour
             }
             else if(player.transform.position.x>19){
                 
-                // Debug.Log("POS : cars");
+                Debug.Log("POS : cars");
                 List<int> exclusions = new List<int> { 6, 7, 8 };
                 int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
@@ -122,7 +128,7 @@ public class ZombieSpawner : MonoBehaviour
             }
             else if(player.transform.position.x<-8.4){
                 
-                // Debug.Log("POS : Foot");
+                Debug.Log("POS : Foot");
                 List<int> exclusions = new List<int> { 3, 4, 5 };
                 int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
@@ -146,6 +152,14 @@ public class ZombieSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawningDelay); 
             
         }
-        lastInitialZombies = lastInitialZombies+1;
+        if(numberOfWave >= 15){
+            if(numberOfWave % 2 != 0){
+                lastInitialZombies = lastInitialZombies+1;
+            }
+        }
+        else{
+            lastInitialZombies = lastInitialZombies+2;
+        }
+        
     }
 }

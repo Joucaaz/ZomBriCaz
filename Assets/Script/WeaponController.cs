@@ -53,9 +53,11 @@ public class WeaponController : MonoBehaviour
     public int bulletsTotalInitial;
 
     public float distanceOfShot;
+    public PlayerMovement2 playerMovementScript;
 
     void Start()
     {
+        playerMovementScript = GameObject.FindGameObjectWithTag("Player").transform.GetComponent<PlayerMovement2>();
         maxBulletsInOneMagazine = bulletsInside;
         bulletsTotal = maxBulletsInOneMagazine * numberofMagazine;
         bulletsTotalInitial = bulletsTotal;
@@ -240,4 +242,5 @@ public class WeaponController : MonoBehaviour
         return false;
 
     }
+
 }

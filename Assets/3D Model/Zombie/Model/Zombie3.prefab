@@ -233,6 +233,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerMovement: {fileID: 0}
   damageDegats: 50
+  zombieScript: {fileID: 5068853499619665538}
 --- !u!1 &1287551837057328209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,6 +1737,7 @@ MonoBehaviour:
   stopDistance: 1.5
   zombieHealth: 200
   isDead: 0
+  zombieAttack: 0
 --- !u!195 &8410596856402974325
 NavMeshAgent:
   m_ObjectHideFlags: 0

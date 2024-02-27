@@ -6,13 +6,14 @@ public class TransitionEventReload : StateMachineBehaviour
 {
     public float minimumNormalizedTime = 0.99f;
     public int newBulletsInside = 40;
+    private bool enTrain = false;
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         PlayerMovement2 playerMovement = animator.gameObject.GetComponentInParent<MouseLook>().GetComponentInParent<PlayerMovement2>();
         WeaponController weaponController = animator.gameObject.GetComponentInParent<WeaponController>();
         
-        if (stateInfo.normalizedTime >= minimumNormalizedTime)
+        if (stateInfo.normalizedTime >= minimumNormalizedTime && !enTrain)
         {
             
             // Debug.Log("test");
@@ -24,6 +25,7 @@ public class TransitionEventReload : StateMachineBehaviour
                 }
                 weaponController.bulletsInside = newBulletsInside;
                 playerMovement.reloadingEnCours = false;
+                enTrain = true;
                 
             }
                 
@@ -33,8 +35,12 @@ public class TransitionEventReload : StateMachineBehaviour
             }
         }
         else{
-            playerMovement.reloadingEnCours = false;
+            // playerMovement.reloadingEnCours = false;
         }
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex){
+        enTrain = false;
     }
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -52,7 +52,7 @@ public class BuySkins : MonoBehaviour
         }
     }
 
-    private void hideSkins()
+    public void hideSkins()
     {
         pauseManager.boolShowSkins = false;
         armeAchat.buyAmmo.enabled = true;

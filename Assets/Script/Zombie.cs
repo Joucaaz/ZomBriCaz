@@ -22,6 +22,7 @@ public class Zombie : MonoBehaviour
 
     public bool isDead = false;
     private float soust;
+    public bool zombieAttack = false;
 
 
 
@@ -52,23 +53,48 @@ public class Zombie : MonoBehaviour
     {
         if(gameObject.activeSelf && zombieNavMesh.enabled)
         {
-                zombieNavMesh.destination = player.transform.position ;
+                
     
                 distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(player.transform.position.x, player.transform.position.z));
                 //isRunning = (zombieNavMesh.velocity.magnitude > 1) && (zombieNavMesh.speed >= 1.5f);
                 //isMoving = (zombieNavMesh.velocity.magnitude > 1) && (zombieNavMesh.speed < 1.5f);
-                
-                if (distance <= stopDistance)
-                {
-                    zombieStopWalk();
-                    zombieNavMesh.velocity = Vector3.zero;
+                if(distance <= stopDistance){
                     zombieAttackHit();
+                    zombieNavMesh.destination = gameObject.transform.position ;
                 }
-                else if(zombieHealth > 0)
-                {
+                else{
+                    zombieNavMesh.destination = player.transform.position ;
+                }
+                if(zombieAttack){
+                    zombieStopWalk();
                     
-                    zombieWalk();
+                    // zombieNavMesh.velocity = Vector3.zero;
                 }
+                else{
+                    zombieWalk();
+                    
+                }
+                // if (zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack") || zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
+                // {
+                //     zombieNavMesh.velocity = Vector3.zero;
+                //     if (distance <= stopDistance)
+                //     {
+                //         zombieStopWalk();
+                        
+                //         zombieAttackHit();
+                //     }
+                //     else if(zombieHealth > 0)
+                //     {
+                        
+                //         zombieWalk();
+                //     }
+                // }
+                // else{
+                //     Debug.Log("non");
+
+                // }
+
+                
                 
             /*
             Collider[] colliders = Physics.OverlapSphere(transform.position, collisionRadius, zombieLayer);
@@ -89,6 +115,9 @@ public class Zombie : MonoBehaviour
 
     }
 
+    public void ActivateVelocity(){
+
+    }
     private void zombieWalk()   
     {
         if(zombieNavMesh.speed >= moySpeed){
@@ -112,7 +141,7 @@ public class Zombie : MonoBehaviour
     private void zombieAttackHit()
     {
         int randomValue = Random.Range(0, 2);
-
+        zombieAttack = true;
         // float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(player.transform.position.x, player.transform.position.z));
         //Debug.Log(isAttacking);
         if (!zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack") && !zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
@@ -136,14 +165,14 @@ public class Zombie : MonoBehaviour
         
     }
 
+    
     public void zombieDie()
     {
     
         Debug.Log(player.gameObject);
         Debug.Log(player.GetComponent<PlayerMovement2>().money);
         
-        zombieAnimator.SetBool("isRunning", false);
-        zombieAnimator.SetBool("isMoving", false);
+        
 
         int randomValue = Random.Range(0, 2);
         if (randomValue == 0)
@@ -154,6 +183,8 @@ public class Zombie : MonoBehaviour
         {
             zombieAnimator.SetBool("isDeadFront", true);
         }
+        zombieAnimator.SetBool("isRunning", false);
+        zombieAnimator.SetBool("isMoving", false);
         zombieAnimator.SetLayerWeight(1, 0f);
         zombieNavMesh.enabled = false;
 
@@ -163,7 +194,7 @@ public class Zombie : MonoBehaviour
             collider.enabled = false;
         }
         //player.GetComponent<PlayerMovement2>().money += 10;
-        Destroy(gameObject, 15f);
+        Destroy(gameObject, 30f);
     }
 
     private void OnCollisionEnter(Collision collision)

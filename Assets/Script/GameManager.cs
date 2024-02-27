@@ -83,10 +83,12 @@ public class GameManager : MonoBehaviour
             isRankings = false;
             isSettings = false;
             SoundManager.Instance.StopMusic();
+            SoundManager.Instance.PlayMusic(ambianceClip);
             GameObject.Find("CanvasVideo").GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
+            SoundManager.Instance.StopMusic();
             GameObject.Find("CanvasVideo").GetComponent<CanvasGroup>().alpha = 1;
             if(backgroundMusic != null && !SoundManager.Instance.musicSource.isPlaying){
                 SoundManager.Instance.PlayMusic(backgroundMusic);
