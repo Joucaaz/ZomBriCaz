@@ -127,7 +127,7 @@ public class ChargerUI : MonoBehaviour
             nbBalles.color = textColor;
             textReload.enabled = false;
         }
-        if(playerMovementScript.healthPlayer == 100){
+        if(playerMovementScript.healthPlayer == 100 && playerMovementScript.buyAtoutMastodonte.atoutAchete){
             canvaBlood.GetComponent<CanvasGroup>().alpha = 1f;
             bloodImage.sprite = blood100;
         }

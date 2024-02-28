@@ -55,13 +55,15 @@ public class BuySkins : MonoBehaviour
     public void hideSkins()
     {
         pauseManager.boolShowSkins = false;
-        armeAchat.buyAmmo.enabled = true;
-        gameObject.SetActive(false);
+        armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
+        gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        // gameObject.SetActive(false);
     }
 
     public void showSkins(){
         pauseManager.boolShowSkins = true;
-        armeAchat.buyAmmo.enabled = false;
-        gameObject.SetActive(true);
+        armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
+        gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        // gameObject.SetActive(true);
     }
 }

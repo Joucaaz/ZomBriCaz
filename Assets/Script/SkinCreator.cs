@@ -34,7 +34,8 @@ public class SkinCreator : MonoBehaviour
         playerScript = player.gameObject.GetComponent<PlayerMovement2>();
         title.text = titleString;
         imageSkin.sprite = skin;
-        // priceText.text = price.ToString() + " $";
+        
+        
 
     }
     void Update(){
@@ -52,6 +53,9 @@ public class SkinCreator : MonoBehaviour
                 // buttonBuy.interactable = false;
                 buttonText.text = owned;
             }
+        }
+        if(priceText != null){
+            priceText.text = price.ToString() + " $";
         }
         
     }

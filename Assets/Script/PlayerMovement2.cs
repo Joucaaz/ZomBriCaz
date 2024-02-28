@@ -15,9 +15,9 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] public UnityEngine.CharacterController controller;
     [SerializeField] public Animator characterAnimator;
 
-    public float walkSpeed = 5f;
+    public float walkSpeed;
     [SerializeField] public float initialWalkSpeed = 5f;
-    [SerializeField] public float walkSpeedCrouching = 2.5f;
+    // [SerializeField] public float walkSpeedCrouching = 2.5f;
     [SerializeField] public float runSpeed = 10f;
 
     Vector3 velocity;
@@ -89,6 +89,10 @@ public class PlayerMovement2 : MonoBehaviour
     [SerializeField] public PauseManager pauseManager;
     private PauseManager pauseScript;
     public bool isRunning;
+    public int countAtout;
+    public BuyAtout buyAtoutSpeed;
+    public BuyAtout buyAtoutMastodonte;
+    private float normalPitch = 1f;
 
     private void Awake(){
         defaultPlayerActions = GetComponent<PlayerInput>();
@@ -97,6 +101,7 @@ public class PlayerMovement2 : MonoBehaviour
     }
     void Start()
     {
+        walkSpeed = initialWalkSpeed;
         gameManager = GameObject.Find("GameManager"); 
         for(int i=0; i<Gamepad.all.Count; i++){
             Debug.Log(Gamepad.all[i].name);
@@ -284,7 +289,6 @@ public class PlayerMovement2 : MonoBehaviour
             if(reloadingEnCours && isRunning){
                 IdleHand();
             }
-            Debug.Log(reloadingEnCours + " + " + isRunning);
             if (isReloading && !isRunning && bulletsInside < inventory.GetItem(primarySecondary).GetComponent<WeaponController>().maxBulletsInOneMagazine)
             {
                 if (bulletsTotal > 0)
@@ -300,6 +304,11 @@ public class PlayerMovement2 : MonoBehaviour
                 InspectWeapon();
             }
 
+        }
+
+        if(buyAtoutSpeed.atoutAchete){
+            normalPitch = 1.5f;
+            characterAnimator.SetFloat("speedReload", normalPitch);
         }
         
 
@@ -324,7 +333,8 @@ public class PlayerMovement2 : MonoBehaviour
     {
         if(!reloadingEnCours){
             characterAnimator.Play("Reload");
-            SoundManager.Instance.PlayReloadSound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip);
+            SoundManager.Instance.PlayReloadSound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip, normalPitch);
+            
             // SoundManager.Instance.PlaySound(inventory.GetItem(primarySecondary).GetComponent<WeaponController>().reloadClip);
             lastReloadTime = Time.time;
             reloadingEnCours = true;
@@ -385,7 +395,7 @@ public class PlayerMovement2 : MonoBehaviour
             onUnscopedSniper();
         }
         cameraUI.enabled = true;
-        //walkSpeed = initialWalkSpeed;
+        walkSpeed = initialWalkSpeed;
     }
 
     private void Aiming()
@@ -528,7 +538,7 @@ public class PlayerMovement2 : MonoBehaviour
             {
                 controller.height = crouchPosition;
             }
-            walkSpeed = walkSpeedCrouching;
+            // walkSpeed = walkSpeedCrouching;
         }
         else if (!isCrouching)
         {
@@ -861,6 +871,10 @@ public class PlayerMovement2 : MonoBehaviour
         // Assurer que l'opacité est bien à zéro à la fin
         
     }
+
+    // public float updateSpeedReload(){
+    //     characterAnimator.
+    // }
 
     /*
     private void TimeAnimmationDrawBegin(int currentNumberWeapon)

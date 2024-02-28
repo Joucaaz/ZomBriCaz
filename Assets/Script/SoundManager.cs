@@ -34,8 +34,9 @@ public class SoundManager : MonoBehaviour
         musicSource.Stop();
     }
 
-    public void PlayReloadSound(AudioClip clip){
+    public void PlayReloadSound(AudioClip clip, float pitch){
         reloadSource.clip = clip;
+        reloadSource.pitch = pitch;
         reloadSource.loop = false;
         reloadSource.Play();
     }

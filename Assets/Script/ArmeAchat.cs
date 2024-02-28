@@ -98,10 +98,10 @@ public class ArmeAchat : MonoBehaviour
         if(armeAchete == false){
             
             
-            buyWeapons.enabled = true;
-            buyAmmo.enabled = false;
-            price.enabled = true;
-            price.text = coutArme.ToString();
+            buyWeapons.GetComponent<CanvasGroup>().alpha = 1;
+            buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
+            price.GetComponent<CanvasGroup>().alpha = 1;
+            price.text = coutArme.ToString() + " $";
             if (UserInput.instance.BuyWeaponInput)// defaultPlayerActions.actions["BuyButton"].triggered
             {
                 AcheterArme();
@@ -114,9 +114,9 @@ public class ArmeAchat : MonoBehaviour
             // Debug.Log("Appuyez sur une touche pour acheter l'arme");
         }
         else{
-            buyAmmo.enabled = true;
-            buyWeapons.enabled = false;
-            price.enabled = false;
+            buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
+            buyWeapons.GetComponent<CanvasGroup>().alpha = 0;
+            price.GetComponent<CanvasGroup>().alpha = 0;
             // price.text = coutAmmo.ToString();
             if (UserInput.instance.BuyWeaponInput && playerScript.inventory.GetItem(playerScript.primarySecondary) == playerScript.ListWeapons[prefabWeapon])
             {
