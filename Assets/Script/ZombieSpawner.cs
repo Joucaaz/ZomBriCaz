@@ -156,12 +156,12 @@ public class ZombieSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawningDelay); 
             
         }
-        if(numberOfWave >= 15){
-            lastInitialZombies = lastInitialZombies+1;
-        }
-        else{
+        // if(numberOfWave >= 15){
+        //     lastInitialZombies = lastInitialZombies+1;
+        // }
+        // else{
             lastInitialZombies = lastInitialZombies+2;
-        }
+        // }
         
     }
 }

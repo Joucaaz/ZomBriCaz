@@ -219,7 +219,7 @@ public class PlayerMovement2 : MonoBehaviour
 
             // bool AimingButton = defaultPlayerActions.actions["Aiming"].ReadValue<float>() == 1.0f;
             bool AimingButton = UserInput.instance.AimingInput;
-            if (AimingButton && !isAiming)
+            if (AimingButton && !isAiming && !reloadingEnCours)
             {
                 Aiming();
             }
@@ -283,7 +283,7 @@ public class PlayerMovement2 : MonoBehaviour
             }
             else if (isShooting && bulletsInside == 0)
             {
-                if(bulletsTotal  > 0 && !reloadingEnCours )
+                if(bulletsTotal  > 0 && !reloadingEnCours && !isAiming)
                 {
                     
                     Reload();
@@ -295,7 +295,7 @@ public class PlayerMovement2 : MonoBehaviour
             }
             if (isReloading && !isRunning && bulletsInside < inventory.GetItem(primarySecondary).GetComponent<WeaponController>().maxBulletsInOneMagazine)
             {
-                if (bulletsTotal > 0)
+                if (bulletsTotal > 0 && !isAiming)
                 {
                     
                     Reload();
@@ -304,7 +304,7 @@ public class PlayerMovement2 : MonoBehaviour
             if(gameObject.transform.position.y <= -6.2017){
                 playerDie();
             }
-            if(isInspecting && !isRunning ){
+            if(isInspecting && !isRunning && !isAiming){
                 InspectWeapon();
             }
 
