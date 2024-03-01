@@ -10,12 +10,13 @@ using UnityEngine.UI;
 public class PauseManager : MonoBehaviour
 {
     private PlayerInput defaultPlayerActions;
-    public GameObject pauseFirstSelected, keyboardFirstSelected, controllerFirstSelected;
+    public GameObject pauseFirstSelected, keyboardFirstSelected, controllerFirstSelected, soundsFirstSelected;
     public TextMeshProUGUI zombieKilled;
     public TextMeshProUGUI waveNumber;
     public TextMeshProUGUI duration;
 
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject pauseSettingsSounds;
     [SerializeField] GameObject pauseSettingsKeyboard;
     [SerializeField] GameObject pauseSettingsController;
     [SerializeField] GameObject UICameraCursor;
@@ -27,6 +28,7 @@ public class PauseManager : MonoBehaviour
 
     public bool isGamePaused;
     public bool KMPaused = false;
+    public bool SoundPaused = false;
     public bool ControllerPaused = false;
     public bool gamepad = true;
     public bool boolShowSkins = false;
@@ -37,6 +39,9 @@ public class PauseManager : MonoBehaviour
         chargerUI = canvaChargerUI.GetComponent<ChargerUI>();
         // defaultPlayerActions = new ActionZombieBriCazV2();
         // defaultPlayerActions.Enable();
+    }
+    void Start(){
+
     }
     // Update is called once per frame
     void Update()
@@ -57,7 +62,7 @@ public class PauseManager : MonoBehaviour
         waveNumber.text = chargerUI.zombieSpawner.numberOfWave.ToString();
         duration.text = chargerUI.timerText.text;
         
-        if(isGamePaused && !KMPaused && !ControllerPaused){
+        if(isGamePaused && !KMPaused && !ControllerPaused && !SoundPaused){
             if(UserInput.instance.DetectAllUserInputs() == "gamepad" && !gamepad){
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
@@ -66,12 +71,29 @@ public class PauseManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(pauseFirstSelected);
             }
             else if(UserInput.instance.DetectAllUserInputs() == "keyboard"){
+                Debug.Log("kekeke");
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 gamepad = false;
                 EventSystem.current.SetSelectedGameObject(null);
             }
         }
+        else if(SoundPaused){
+                if(UserInput.instance.DetectAllUserInputs() == "gamepad" && !gamepad){
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    gamepad = true;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(soundsFirstSelected);
+                }
+                else if(UserInput.instance.DetectAllUserInputs() == "keyboard"){
+                    
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    gamepad = false;
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
+            }
         else if(KMPaused){
                 if(UserInput.instance.DetectAllUserInputs() == "gamepad" && !gamepad){
                     Cursor.lockState = CursorLockMode.Locked;
@@ -116,6 +138,7 @@ public class PauseManager : MonoBehaviour
             gamepad = false;
             KMPaused = false;
             ControllerPaused = false;
+            SoundPaused = false;
             isPaused = !isPaused;
 
             // Debug.Log(isPaused);
@@ -140,6 +163,18 @@ public class PauseManager : MonoBehaviour
             }
             pauseSettingsKeyboard.SetActive(false);
             pauseSettingsController.SetActive(false);
+            pauseSettingsSounds.SetActive(false);
+    }
+    public void loadSettingsSounds(){
+        gamepad = false;
+        SoundPaused = true;
+        pauseMenu.SetActive(!isPaused);
+        pauseSettingsSounds.SetActive(isPaused);
+        isPaused = !isPaused;
+        
+        if(UserInput.instance.CancelInput && pauseSettingsSounds.activeSelf){
+            loadPause();
+        }
     }
 
     public void loadSettingsKeyboard(){
@@ -168,5 +203,5 @@ public class PauseManager : MonoBehaviour
         GameManager.Instance.loadHome();
     }
 
-
+    
 }

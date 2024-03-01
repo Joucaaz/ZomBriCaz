@@ -13,14 +13,15 @@ public class SettingsCanva : MonoBehaviour
     [SerializeField] GameObject settingsKeyboard;
     [SerializeField] GameObject settingsController;
     [SerializeField] GameObject settingsChangeName;
+    [SerializeField] GameObject settingsSounds;
 
-    public GameObject settingsFirstSelected, keyboardSettingsFirstSelected, controllerSettingsFirstSelected, changeNameSettingsFirstSelected;
+    public GameObject settingsFirstSelected, keyboardSettingsFirstSelected, controllerSettingsFirstSelected, changeNameSettingsFirstSelected, SoundsSettingsFirstSelected;
     public TMP_InputField inputPseudo; 
     // public bool gamepad = true;GameManager.Instance.
     public TextMeshProUGUI textLastUsername;
     private string playerLastUsername;
 
-    public bool isSettingsMenu = true, KMSettings = false, ControllerSettings = false, ChangeNameSettings = false;
+    public bool isSettingsMenu = true, KMSettings = false, ControllerSettings = false, ChangeNameSettings = false, SoundSettings = false;
 
     void Start(){
         StartCoroutine(GetPlayerName("https://joudcazeaux.fr/ZomBriCaz/zombricazGetUser.php")); 
@@ -50,6 +51,22 @@ public class SettingsCanva : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(null);
             }
         }
+        else if(SoundSettings){
+                if(UserInput.instance.DetectAllUserInputs() == "gamepad" && !GameManager.Instance.gamepad){
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
+                    GameManager.Instance.gamepad = true;
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(SoundsSettingsFirstSelected);
+                }
+                else if(UserInput.instance.DetectAllUserInputs() == "keyboard"){
+                    
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    GameManager.Instance.gamepad = false;
+                    EventSystem.current.SetSelectedGameObject(null);
+                }
+            }
         else if(KMSettings){
                 if(UserInput.instance.DetectAllUserInputs() == "gamepad" && !GameManager.Instance.gamepad){
                     Cursor.lockState = CursorLockMode.Locked;
@@ -116,7 +133,19 @@ public class SettingsCanva : MonoBehaviour
         
         
     }
-     public void loadSettingsController(){
+     public void loadSettingsSounds(){
+        GameManager.Instance.gamepad = false;
+        isSettingsMenu = false;
+        KMSettings = false;
+        SoundSettings = true;
+        ControllerSettings = false;
+        ChangeNameSettings = false;
+        settingsMenu.SetActive(false);
+        settingsSounds.SetActive(true);
+        
+        
+    }
+    public void loadSettingsController(){
         GameManager.Instance.gamepad = false;
         isSettingsMenu = false;
         KMSettings = false;

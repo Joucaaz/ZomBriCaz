@@ -263,8 +263,12 @@ public class PlayerMovement2 : MonoBehaviour
                 }
 
             }
-            else
+            else if(isRunning)
             {
+                characterAnimator.SetBool("isWalking", false);
+                characterAnimator.SetBool("isRunning", false);
+            }
+            else{
                 characterAnimator.SetBool("isWalking", false);
                 characterAnimator.SetBool("isRunning", false);
             }

@@ -23,6 +23,8 @@ public class BuySkins : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerScript = player.gameObject.GetComponent<PlayerMovement2>();
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(skinsFirstSelected);
     }
     // Update is called once per frame
     void Update()
@@ -54,16 +56,17 @@ public class BuySkins : MonoBehaviour
 
     public void hideSkins()
     {
+        armeAchat.openSkins = false;
         pauseManager.boolShowSkins = false;
-        armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
-        gameObject.GetComponent<CanvasGroup>().alpha = 0;
-        // gameObject.SetActive(false);
+        // armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
+        // gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        gameObject.SetActive(false);
     }
 
     public void showSkins(){
         pauseManager.boolShowSkins = true;
-        armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
-        gameObject.GetComponent<CanvasGroup>().alpha = 1;
-        // gameObject.SetActive(true);
+        // armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
+        // gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        gameObject.SetActive(true);
     }
 }

@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SoundManager.Instance.StopMusic();
+            // SoundManager.Instance.StopMusic();
             GameObject.Find("CanvasVideo").GetComponent<CanvasGroup>().alpha = 1;
             if(backgroundMusic != null && !SoundManager.Instance.musicSource.isPlaying){
                 SoundManager.Instance.PlayMusic(backgroundMusic);
@@ -153,12 +153,21 @@ public class GameManager : MonoBehaviour
                 // EventSystem.current.SetSelectedGameObject(null);
                 // EventSystem.current.SetSelectedGameObject(creditsFirstSelected);
             }
-            else{
+            else if(scene.name == "Settings")
+            {
                 isHomeMenu = false;
                 isBestScoreMenu = false;
                 isCreditMenu = false;
                 isRankings = false;
                 isSettings = true;
+            }
+            else
+            {
+                isHomeMenu = false;
+                isBestScoreMenu = false;
+                isCreditMenu = false;
+                isRankings = false;
+                isSettings = false;
             }
             // else if (scene.name == "Settings")
             // {

@@ -33,6 +33,7 @@ public class ArmeAchat : MonoBehaviour
     public string nameWeapons;
     public LayerMask excludeLayer;
     public BuySkins buySkins;
+    public bool openSkins = false;
 
     
      
@@ -77,7 +78,7 @@ public class ArmeAchat : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 1000, excludeLayer))
         {
-            if (hit.collider != null && hit.collider.gameObject == collider && distanceToPlayer < distanceDetection)
+            if (hit.collider != null && hit.collider.gameObject == collider && distanceToPlayer < distanceDetection && !openSkins)
             {
                 AfficherIndicationAchat();
             }
@@ -98,9 +99,12 @@ public class ArmeAchat : MonoBehaviour
         if(armeAchete == false){
             
             
-            buyWeapons.GetComponent<CanvasGroup>().alpha = 1;
-            buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
-            price.GetComponent<CanvasGroup>().alpha = 1;
+            // buyWeapons.GetComponent<CanvasGroup>().alpha = 1;
+            // buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
+            // price.GetComponent<CanvasGroup>().alpha = 1;
+            buyWeapons.enabled = true;
+            buyAmmo.enabled = false;
+            price.enabled = true;
             price.text = coutArme.ToString() + " $";
             if (UserInput.instance.BuyWeaponInput)// defaultPlayerActions.actions["BuyButton"].triggered
             {
@@ -114,14 +118,23 @@ public class ArmeAchat : MonoBehaviour
             // Debug.Log("Appuyez sur une touche pour acheter l'arme");
         }
         else{
-            buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
-            buyWeapons.GetComponent<CanvasGroup>().alpha = 0;
-            price.GetComponent<CanvasGroup>().alpha = 0;
+            // buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
+            // buyWeapons.GetComponent<CanvasGroup>().alpha = 0;
+            // price.GetComponent<CanvasGroup>().alpha = 0;
+             buyWeapons.enabled = false;
+            buyAmmo.enabled = true;
+            price.enabled = false;
+
+
             // price.text = coutAmmo.ToString();
             if (UserInput.instance.BuyWeaponInput && playerScript.inventory.GetItem(playerScript.primarySecondary) == playerScript.ListWeapons[prefabWeapon])
             {
+                openSkins = true;
                 buySkins.showSkins();
                 // AcheterMunitions();
+            }
+            else if(UserInput.instance.BuyWeaponInput && playerScript.inventory.GetItem(playerScript.primarySecondary) != playerScript.ListWeapons[prefabWeapon]){
+                SoundManager.Instance.PlaySound(wrongBuy);
             }
             // if (Input.GetButtonDown("BuyButton"))
             // {

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,11 +29,21 @@ public class BuyAtout : MonoBehaviour
     public Sprite imageSpeed;
     public Sprite imageMoney;
     public Sprite imageReload;
+    public Sprite imageAmmo;
+    public GameObject armAtout;
+    public GameObject medoc;
+    public Material material1;
+    public Material material2;
+    public string descriptionAtout;
+    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI titleText;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerScript = player.gameObject.GetComponent<PlayerMovement2>();
+        titleText.text = nameAtout;
+        descriptionText.text = descriptionAtout;
     }
 
     // Update is called once per frame
@@ -52,7 +61,7 @@ public class BuyAtout : MonoBehaviour
             {
                 string firstKey = keys[0];
                 if(atoutAchete){
-                    buyAtout.text = "You already have this speciality.";
+                    buyAtout.text = "You already have this specialty.";
                 }
                 else{
                     buyAtout.text = "Press " + firstKey + " to buy the " + nameAtout + " for :";
@@ -67,7 +76,7 @@ public class BuyAtout : MonoBehaviour
             {
                 string firstKey = keys[1];
                 if(atoutAchete){
-                    buyAtout.text = "You already have this speciality.";
+                    buyAtout.text = "You already have this specialty.";
                 }
                 else{
                     buyAtout.text = "Press <sprite name=\"" + firstKey + "\"> to buy the " + nameAtout + " for :";
@@ -118,20 +127,29 @@ public class BuyAtout : MonoBehaviour
 
             switch (nameAtout)
             {
-                case "Mastodonte":
+                case "Jugger-nog":
                     AddMastodonte();
+                    animAtout(playerScript.inventory.GetItem(playerScript.primarySecondary), armAtout);
                     playerScript.countAtout += 1;
                     break;
-                case "Speed":
+                case "SonicSurge":
                     AddSpeed();
+                    animAtout(playerScript.inventory.GetItem(playerScript.primarySecondary), armAtout);
                     playerScript.countAtout += 1;
                     break;
-                case "Sales":
+                case "DollarDiscount":
                     AddMoney();
+                    animAtout(playerScript.inventory.GetItem(playerScript.primarySecondary), armAtout);
                     playerScript.countAtout += 1;
                     break;
-                case "Reload":
+                case "ReloadRush":
                     AddReload();
+                    animAtout(playerScript.inventory.GetItem(playerScript.primarySecondary), armAtout);
+                    playerScript.countAtout += 1;
+                    break;
+                case "BulletsFury":
+                    AddAmmos();
+                    animAtout(playerScript.inventory.GetItem(playerScript.primarySecondary), armAtout);
                     playerScript.countAtout += 1;
                     break;
                 default:
@@ -150,6 +168,38 @@ public class BuyAtout : MonoBehaviour
         else{
             SoundManager.Instance.PlaySound(wrongBuy);
         }
+    }
+
+    public void animAtout(GameObject beforeWeapon, GameObject afterWeapon)
+    {
+        StartCoroutine(ChangeWeaponAtoutCoroutine(beforeWeapon, afterWeapon));
+    }
+
+    private IEnumerator ChangeWeaponAtoutCoroutine(GameObject beforeWeapon, GameObject armAtout)
+    {
+
+        // Jouez l'animation "DrawReverse"
+        playerScript.characterAnimator.Play("DrawReverse");
+
+        yield return new WaitForSeconds(beforeWeapon.GetComponent<WeaponController>().endDraw);
+
+        List<Material> materialsList = new List<Material> { material1, material2 };
+                
+        medoc.GetComponent<Renderer>().SetMaterials(materialsList);
+
+        beforeWeapon.SetActive(false);
+        armAtout.SetActive(true);
+        playerScript.characterAnimator = armAtout.GetComponent<Animator>();
+
+        playerScript.characterAnimator.Play("EatmMedoc");
+
+        yield return new WaitForSeconds(1.5f);
+
+        armAtout.SetActive(false);
+        beforeWeapon.SetActive(true);
+
+        playerScript.characterAnimator = beforeWeapon.GetComponent<Animator>();
+
     }
 
     public void AddMastodonte(){
@@ -191,43 +241,18 @@ public class BuyAtout : MonoBehaviour
         parentAtout.transform.GetChild(playerScript.countAtout).GetComponent<UnityEngine.UI.Image>().sprite = imageMoney;
     }
     public void AddReload(){
-        // playerScript.updateSpeedReload();
-        // GameObject[] reloadObjects = new GameObject[parentWeapons.transform.childCount - 2];
-        // for (int i = 0; i < parentWeapons.transform.childCount - 2; i++)
-        // {
-        //     reloadObjects[i] = parentWeapons.transform.GetChild(i).gameObject;
-        // }
-
-        // foreach (GameObject reloadObject in reloadObjects)
-        // {
-        //     Debug.Log(reloadObject);
-        //     Animator animator = reloadObject.GetComponent<Animator>();
-        //     Debug.Log(animator);           
-
-        //     if (animator != null)
-        //     {
-        //         // AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(1);//could replace 0 by any other animation layer index
-                
-        //         // Debug.Log(animator["Reload"]);
-
-        //         animator.SetFloat("speedReload", 5f);
-        //     }
-        // }
-
         parentAtout.transform.GetChild(playerScript.countAtout).GetComponent<UnityEngine.UI.Image>().sprite = imageReload;
     }
 
-    public AnimationClip FindAnimation (Animator animator, string name) 
-    {
-    foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
-    {
-        // Debug.Log("clip : " + clip);
-        if (clip.name.Contains(name))
+    public void AddAmmos(){
+        WeaponController[] reloadObjects = new WeaponController[parentWeapons.transform.childCount - 2];
+        for (int i = 0; i < parentWeapons.transform.childCount - 2; i++)
         {
-            return clip;
+            reloadObjects[i] = parentWeapons.transform.GetChild(i).gameObject.GetComponent<WeaponController>();
+            reloadObjects[i].numberofMagazine = reloadObjects[i].numberofMagazine + 3;
+            reloadObjects[i].bulletsTotal = reloadObjects[i].numberofMagazine * reloadObjects[i].maxBulletsInOneMagazine;
         }
+        parentAtout.transform.GetChild(playerScript.countAtout).GetComponent<UnityEngine.UI.Image>().sprite = imageAmmo;
     }
 
-    return null;
-    }
 }

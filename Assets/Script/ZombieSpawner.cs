@@ -88,7 +88,7 @@ public class ZombieSpawner : MonoBehaviour
         if (numberOfWave == 14)
         {
             CancelInvoke("startNextWave");
-            InvokeRepeating("startNextWave", 45f, 75f);
+            InvokeRepeating("startNextWave", 45f, 60f);
         }
     }
     
@@ -97,11 +97,15 @@ public class ZombieSpawner : MonoBehaviour
 
         for(int i = 0; i<lastInitialZombies; i++){
             Vector3 spawnPosition;
+            Debug.Log(player);
+            Debug.Log(AllPlayer);
+            Debug.Log(AllPlayer.transform.position);
+            Debug.Log(player.transform.position);
             // spawnPosition = spawners[0].transform.position;
             // var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
             // Zombie zombieScript = zombie.GetComponent<Zombie>();
             // zombiesList.Add(zombieScript);
-            if(player.transform.position.z > 32){
+            if(player.transform.position.z > 55){
 
                 Debug.Log("POS : port");
                 List<int> exclusions = new List<int> { 0, 1, 2 };
@@ -114,7 +118,7 @@ public class ZombieSpawner : MonoBehaviour
                 zombiesList.Add(zombieScript);
             
             }
-            else if(player.transform.position.x>19){
+            else if(player.transform.position.x>14){
                 
                 Debug.Log("POS : cars");
                 List<int> exclusions = new List<int> { 6, 7, 8 };
@@ -126,7 +130,7 @@ public class ZombieSpawner : MonoBehaviour
                 Zombie zombieScript = zombie.GetComponent<Zombie>();
                 zombiesList.Add(zombieScript);
             }
-            else if(player.transform.position.x<-8.4){
+            else if(player.transform.position.x<-11){
                 
                 Debug.Log("POS : Foot");
                 List<int> exclusions = new List<int> { 3, 4, 5 };
@@ -153,9 +157,7 @@ public class ZombieSpawner : MonoBehaviour
             
         }
         if(numberOfWave >= 15){
-            if(numberOfWave % 2 != 0){
-                lastInitialZombies = lastInitialZombies+1;
-            }
+            lastInitialZombies = lastInitialZombies+1;
         }
         else{
             lastInitialZombies = lastInitialZombies+2;

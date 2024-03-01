@@ -70,6 +70,7 @@ public class UserInput : MonoBehaviour
     {
         UpdateInputs();
         
+        
         // Debug.Log(DetectAllUserInputs());
     }
 
