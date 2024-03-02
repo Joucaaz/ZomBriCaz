@@ -36,11 +36,12 @@ public class GameManager : MonoBehaviour
     public Canvas canvaConnected;
     public TMP_InputField inputPseudo; 
     string playerName;
-    private bool findInBDD = false;
+    public bool findInBDD = false;
     void Awake()
     {
         if(instance == null){
             // PlayerPrefs.DeleteKey("PlayerID");
+            // PlayerPrefs.DeleteKey("PlayerName");
             
             instance = this;
             playerConnected();
@@ -302,6 +303,9 @@ public class GameManager : MonoBehaviour
             logMenu = false;
             canvaConnected.gameObject.SetActive(false);
             StartCoroutine(SendUserInfoToBDD("https://joudcazeaux.fr/ZomBriCaz/zombricazAddUser.php", inputPseudo.text));
+            // if(!findInBDD){
+            //     AskPlayerName();
+            // }
         }
         
     }
@@ -344,6 +348,7 @@ public class GameManager : MonoBehaviour
                 else{
                     Debug.Log("false");
                     findInBDD = false;
+                    // AskPlayerName();
                 }
             }
         }
@@ -365,11 +370,15 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("Requête POST réussie : " + webRequest.downloadHandler.text);
-                if(webRequest.downloadHandler.text.Contains("Erreur")){
+                if(webRequest.downloadHandler.text.Contains("Duplicate")){
+                    logMenu = true;
                     AskPlayerName();
+                    Debug.Log("2");
+                    
                 }
                 else{
                     StartCoroutine(GetUserInfoFromBDD("https://joudcazeaux.fr/ZomBriCaz/zombricazGetUserInfo.php", nameUser));
+                    Debug.Log("3");
                 }
                 
             }

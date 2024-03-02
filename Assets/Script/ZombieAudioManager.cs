@@ -12,6 +12,7 @@ public class ZombieAudioManager : MonoBehaviour
     private Transform zombiesParent;
     private GameObject[] zombies;
     public PlayerMovement2 player;
+    public AudioModifier audioModifier;
     void Start()
     {
         
@@ -78,7 +79,7 @@ public class ZombieAudioManager : MonoBehaviour
 
             // Appliquer le pan et le volume
             zombieAudio.panStereo = pan;
-            zombieAudio.volume = volume;
+            zombieAudio.volume = volume * audioModifier.volumeTemp;
 
             if (!zombieAudio.isPlaying)
             {
@@ -89,4 +90,39 @@ public class ZombieAudioManager : MonoBehaviour
         }
         
     }
+
+    // void PlayZombieSound(GameObject zombie, float distanceToPlayer)
+    // {
+    //     if(!zombie.GetComponent<Zombie>().isDead){
+    //         AudioSource zombieSource = SoundManager.Instance.zombieSound;
+    //         if (zombieSource != null)
+    //         {
+                
+    //             zombieSource.spatialBlend = 1f; // 3D sound
+    //             zombieSource.maxDistance = soundDistanceThreshold; // Maximum distance for attenuation
+    //         }
+
+    //         // Calcul de la direction du son (panning)
+    //         Vector3 directionToPlayer = playerTransform.position - zombie.transform.position;
+    //         float pan = Mathf.Clamp(directionToPlayer.x / soundDistanceThreshold, -1f, 1f);
+
+    //         // Calcul de l'intensité du son (atténuation en fonction de la distance)
+    //         float volume = 1f - (distanceToPlayer / soundDistanceThreshold);
+
+    //         // Correction pour normaliser la valeur entre 0 et 1
+    //         volume = Mathf.Clamp01(volume);
+
+    //         // Appliquer le pan et le volume
+    //         zombieSource.panStereo = pan;
+    //         zombieSource.volume = volume;
+
+    //         if (!zombieSource.isPlaying)
+    //         {
+    //             int randomZombieSound = Random.Range(0,3);
+    //             zombieSource.clip = zombieSound[randomZombieSound];
+    //             zombieSource.Play();
+    //         }
+    //     }
+        
+    // }
 }

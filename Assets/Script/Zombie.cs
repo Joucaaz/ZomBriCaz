@@ -23,6 +23,7 @@ public class Zombie : MonoBehaviour
     public bool isDead = false;
     private float soust;
     public bool zombieAttack = false;
+    public bool zombieStart = false;
 
 
 
@@ -51,7 +52,7 @@ public class Zombie : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameObject.activeSelf && zombieNavMesh.enabled)
+        if(gameObject.activeSelf && zombieNavMesh.enabled && zombieStart)
         {
                 
     
@@ -60,18 +61,21 @@ public class Zombie : MonoBehaviour
                 //isMoving = (zombieNavMesh.velocity.magnitude > 1) && (zombieNavMesh.speed < 1.5f);
                 if(distance <= stopDistance){
                     zombieAttackHit();
-                    zombieNavMesh.destination = gameObject.transform.position ;
+                    // zombieNavMesh.destination = gameObject.transform.position ;
                 }
                 else{
-                    zombieNavMesh.destination = player.transform.position ;
+                    // zombieNavMesh.destination = player.transform.position ;
                 }
                 if(zombieAttack){
                     zombieStopWalk();
+                    zombieNavMesh.destination = gameObject.transform.position ;
+
                     
                     // zombieNavMesh.velocity = Vector3.zero;
                 }
                 else{
                     zombieWalk();
+                    zombieNavMesh.destination = player.transform.position ;
                     
                 }
                 // if (zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack") || zombieAnimator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))

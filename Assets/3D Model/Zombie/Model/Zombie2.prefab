@@ -1839,6 +1839,7 @@ MonoBehaviour:
   zombieHealth: 200
   isDead: 0
   zombieAttack: 0
+  zombieStart: 0
 --- !u!195 &4909453884383365397
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1852,7 +1853,7 @@ NavMeshAgent:
   m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1

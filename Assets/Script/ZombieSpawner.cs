@@ -105,54 +105,59 @@ public class ZombieSpawner : MonoBehaviour
             // var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
             // Zombie zombieScript = zombie.GetComponent<Zombie>();
             // zombiesList.Add(zombieScript);
-            if(player.transform.position.z > 55){
+            // if(player.transform.position.z > 55){
 
-                Debug.Log("POS : port");
-                List<int> exclusions = new List<int> { 0, 1, 2 };
-                int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
+            //     Debug.Log("POS : port");
+            //     List<int> exclusions = new List<int> { 0, 1, 2 };
+            //     int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
-                spawnPosition = spawners[randomNumber].transform.position;
-                var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
-                zombie.transform.parent = zombiesParent.transform;
-                Zombie zombieScript = zombie.GetComponent<Zombie>();
-                zombiesList.Add(zombieScript);
+            //     spawnPosition = spawners[randomNumber].transform.position;
+            //     var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
+            //     zombie.transform.parent = zombiesParent.transform;
+            //     Zombie zombieScript = zombie.GetComponent<Zombie>();
+            //     zombiesList.Add(zombieScript);
             
-            }
-            else if(player.transform.position.x>14){
+            // }
+            // else if(player.transform.position.x>14){
                 
-                Debug.Log("POS : cars");
-                List<int> exclusions = new List<int> { 6, 7, 8 };
-                int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
+            //     Debug.Log("POS : cars");
+            //     List<int> exclusions = new List<int> { 6, 7, 8 };
+            //     int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
-                spawnPosition = spawners[randomNumber].transform.position;
-                var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
-                zombie.transform.parent = zombiesParent.transform;
-                Zombie zombieScript = zombie.GetComponent<Zombie>();
-                zombiesList.Add(zombieScript);
-            }
-            else if(player.transform.position.x<-11){
+            //     spawnPosition = spawners[randomNumber].transform.position;
+            //     var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
+            //     zombie.transform.parent = zombiesParent.transform;
+            //     Zombie zombieScript = zombie.GetComponent<Zombie>();
+            //     zombiesList.Add(zombieScript);
+            // }
+            // else if(player.transform.position.x<-11){
                 
-                Debug.Log("POS : Foot");
-                List<int> exclusions = new List<int> { 3, 4, 5 };
-                int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
+            //     Debug.Log("POS : Foot");
+            //     List<int> exclusions = new List<int> { 3, 4, 5 };
+            //     int randomNumber = GetRandomNumberWithExclusions(0, 8, exclusions);
 
-                spawnPosition = spawners[randomNumber].transform.position;
-                var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
-                zombie.transform.parent = zombiesParent.transform;
-                Zombie zombieScript = zombie.GetComponent<Zombie>();
-                zombiesList.Add(zombieScript);  
+            //     spawnPosition = spawners[randomNumber].transform.position;
+            //     var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
+            //     zombie.transform.parent = zombiesParent.transform;
+            //     Zombie zombieScript = zombie.GetComponent<Zombie>();
+            //     zombiesList.Add(zombieScript);  
 
-            }
-            else{
+            // }
+            // else{
 
-                // Debug.Log("POS : else");
-                spawnPosition = spawners[Random.Range(0,spawners.Length)].transform.position;
-                var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
-                zombie.transform.parent = zombiesParent.transform;
-                Zombie zombieScript = zombie.GetComponent<Zombie>();
-                zombiesList.Add(zombieScript);
+            //     // Debug.Log("POS : else");
+            //     spawnPosition = spawners[Random.Range(0,spawners.Length)].transform.position;
+            //     var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
+            //     zombie.transform.parent = zombiesParent.transform;
+            //     Zombie zombieScript = zombie.GetComponent<Zombie>();
+            //     zombiesList.Add(zombieScript);
 
-            }
+            // }
+            spawnPosition = spawners[Random.Range(0,spawners.Length)].transform.position;
+            var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
+            zombie.transform.parent = zombiesParent.transform;
+            Zombie zombieScript = zombie.GetComponent<Zombie>();
+            zombiesList.Add(zombieScript);
             yield return new WaitForSeconds(spawningDelay); 
             
         }

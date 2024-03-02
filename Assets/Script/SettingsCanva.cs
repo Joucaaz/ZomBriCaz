@@ -32,7 +32,7 @@ public class SettingsCanva : MonoBehaviour
             // returnHome();
             GameManager.Instance.loadHome();
         }
-        else if((UserInput.instance.CancelInput && settingsKeyboard.activeSelf) || (UserInput.instance.CancelInput && settingsController.activeSelf) || (UserInput.instance.CancelInput && settingsChangeName.activeSelf)){
+        else if((UserInput.instance.CancelInput && settingsKeyboard.activeSelf) || (UserInput.instance.CancelInput && settingsController.activeSelf) || (UserInput.instance.CancelInput && settingsChangeName.activeSelf) || (UserInput.instance.CancelInput && settingsSounds.activeSelf)){
             loadSettings();
         }
 
@@ -183,6 +183,7 @@ public class SettingsCanva : MonoBehaviour
         settingsController.SetActive(false);
         settingsKeyboard.SetActive(false);
         settingsChangeName.SetActive(false);
+        settingsSounds.SetActive(false);
         
     }
 

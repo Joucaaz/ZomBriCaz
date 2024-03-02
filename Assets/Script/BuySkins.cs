@@ -58,6 +58,7 @@ public class BuySkins : MonoBehaviour
     {
         armeAchat.openSkins = false;
         pauseManager.boolShowSkins = false;
+        EventSystem.current.SetSelectedGameObject(null);
         // armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 1;
         // gameObject.GetComponent<CanvasGroup>().alpha = 0;
         gameObject.SetActive(false);
@@ -65,6 +66,8 @@ public class BuySkins : MonoBehaviour
 
     public void showSkins(){
         pauseManager.boolShowSkins = true;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(skinsFirstSelected);
         // armeAchat.buyAmmo.GetComponent<CanvasGroup>().alpha = 0;
         // gameObject.GetComponent<CanvasGroup>().alpha = 1;
         gameObject.SetActive(true);

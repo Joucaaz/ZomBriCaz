@@ -106,7 +106,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().material = material;
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
-                buySkins.hideSkins();
+                // buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -129,7 +129,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().SetMaterials(materialsList);
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
-                buySkins.hideSkins();
+                // buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -151,7 +151,7 @@ public class SkinCreator : MonoBehaviour
                 weapon.GetComponent<Renderer>().SetMaterials(materialsList);
                 SoundManager.Instance.PlaySound(buySound);
                 chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
-                buySkins.hideSkins();
+                // buySkins.hideSkins();
             }
             else{
                 SoundManager.Instance.PlaySound(wrongBuy);
@@ -170,7 +170,7 @@ public class SkinCreator : MonoBehaviour
             playerScript.weaponController.bulletsTotal = playerScript.weaponController.bulletsTotalInitial;
             SoundManager.Instance.PlaySound(buySound);
             chargerUI.GetComponent<MoneyUI>().UpdateMoney(-price);
-            buySkins.hideSkins();
+            // buySkins.hideSkins();
         }
         else{
             SoundManager.Instance.PlaySound(wrongBuy);

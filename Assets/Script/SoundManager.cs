@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    [SerializeField] public AudioSource musicSource, effectsSource, reloadSource;
+    [SerializeField] public AudioSource musicSource, effectsSource, reloadSource, zombieSound;
     // Start is called before the first frame update
     private bool isFading;
     void Awake()
@@ -17,6 +17,11 @@ public class SoundManager : MonoBehaviour
         else{
             Destroy(gameObject);
         }
+    }
+    void Start(){
+        musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", SoundManager.Instance.musicSource.volume);
+        effectsSource.volume = PlayerPrefs.GetFloat("EffectsVolume", SoundManager.Instance.effectsSource.volume);
+        reloadSource.volume = PlayerPrefs.GetFloat("EffectsVolume", SoundManager.Instance.effectsSource.volume);
     }
 
     public void PlaySound(AudioClip clip){

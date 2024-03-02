@@ -52,4 +52,8 @@ public class TakeDamage : MonoBehaviour
         
     }
 
+    public void startZombie(){
+        zombieScript.zombieStart = true;
+    }
+
 }
