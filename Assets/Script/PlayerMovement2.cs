@@ -311,7 +311,7 @@ public class PlayerMovement2 : MonoBehaviour
         }
 
         if(buyAtoutSpeed.atoutAchete){
-            normalPitch = 2f;
+            normalPitch = 1.5f;
             characterAnimator.SetFloat("speedReload", normalPitch);
         }
         

@@ -209,9 +209,9 @@ public class BuyAtout : MonoBehaviour
     }
     public void AddSpeed(){
         
-        playerScript.initialWalkSpeed = playerScript.initialWalkSpeed + 1.5f;
+        playerScript.initialWalkSpeed = playerScript.initialWalkSpeed + 1;
         playerScript.walkSpeed = playerScript.initialWalkSpeed;
-        playerScript.runSpeed = playerScript.runSpeed + 1.5f;
+        playerScript.runSpeed = playerScript.runSpeed + 1;
         // playerScript.crouchPosition = playerScript.crouchPosition + 1;
         parentAtout.transform.GetChild(playerScript.countAtout).GetComponent<UnityEngine.UI.Image>().sprite = imageSpeed;
     }
