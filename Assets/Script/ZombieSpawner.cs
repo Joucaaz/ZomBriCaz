@@ -30,6 +30,7 @@ public class ZombieSpawner : MonoBehaviour
     public int numberOfWave = 0;
     public int nbKills = 0;
     public GameObject chargerUI;
+    private float initialZombieHealth = 250f;
 
     void Start()
     {
@@ -80,9 +81,12 @@ public class ZombieSpawner : MonoBehaviour
         SoundManager.Instance.PlaySound(clipNewWave);
         numberOfWave ++;
         if(numberOfWave != 1){
-            AllPlayer.GetComponent<PlayerMovement2>().money += 100;
-            chargerUI.GetComponent<MoneyUI>().UpdateMoney(100);
+            AllPlayer.GetComponent<PlayerMovement2>().money += 300;
+            chargerUI.GetComponent<MoneyUI>().UpdateMoney(300);
         }        
+        if(numberOfWave % 5 == 0){
+            initialZombieHealth += 50;
+        }
         
         StartCoroutine(SpawnWave());
         if (numberOfWave == 14)
@@ -90,6 +94,8 @@ public class ZombieSpawner : MonoBehaviour
             CancelInvoke("startNextWave");
             InvokeRepeating("startNextWave", 45f, 60f);
         }
+
+        
     }
     
     private IEnumerator SpawnWave()
@@ -157,6 +163,7 @@ public class ZombieSpawner : MonoBehaviour
             var zombie = Instantiate(zombiePrefab[Random.Range(0, zombiePrefab.Length)], spawnPosition, Quaternion.identity);
             zombie.transform.parent = zombiesParent.transform;
             Zombie zombieScript = zombie.GetComponent<Zombie>();
+            zombieScript.zombieHealth = initialZombieHealth;
             zombiesList.Add(zombieScript);
             yield return new WaitForSeconds(spawningDelay); 
             
